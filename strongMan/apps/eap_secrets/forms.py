@@ -10,6 +10,7 @@ class EapSecretSearchForm(forms.Form):
 class AddOrEditForm(forms.Form):
     username = forms.RegexField(max_length=50, initial="", regex=r'^[0-9a-zA-Z_\-]+$')
     password = forms.CharField(max_length=50, widget=forms.PasswordInput, initial="")
+    comment = forms.CharField(max_length=50, initial="")
 
     def __init__(self, *args, **kwargs):
         self.salt = b64encode(urandom(24)).decode('utf-8')
@@ -41,6 +42,14 @@ class AddOrEditForm(forms.Form):
     @my_username.setter
     def my_username(self, value):
         self.initial['username'] = value
+
+    @property
+    def my_comment(self):
+        return self.cleaned_data["comment"]
+
+    @my_comment.setter
+    def my_comment(self, value):
+        self.initial['comment'] = value
 
     @property
     def my_password(self):

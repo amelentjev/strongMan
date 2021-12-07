@@ -41,6 +41,7 @@ class EditHandler(object):
                 store_secret = self.secret
                 self.secret.password = form.my_salted_password
                 self.secret.salt = form.my_salt
+                self.secret.comment = form.my_comment
                 self.secret.save()
                 self.reload_secrets()
                 messages.add_message(self.request, messages.SUCCESS, 'Successfully updated EAP Secret')
@@ -61,6 +62,7 @@ class EditHandler(object):
             form = AddOrEditForm()
             form.my_username = self.secret.username
             form.my_salted_password = self.secret.password
+            form.my_comment = self.secret.comment
             return self._render_edit(form)
         elif self.request.method == "POST":
             if "remove_secret" in self.request.POST:

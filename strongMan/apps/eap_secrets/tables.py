@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 
 class EapSecretsTable(tables.Table):
     name = tables.Column(accessor="username", verbose_name='Name')
+    comment = tables.Column(accessor="comment", verbose_name='Comment')
     type = tables.Column(accessor="type", verbose_name='Type')
     removebtn = tables.Column(accessor="id", verbose_name='Remove', orderable=False)
 
@@ -13,6 +14,10 @@ class EapSecretsTable(tables.Table):
 
     def render_name(self, record):
         return render_to_string('eap_secrets/widgets/name_column.html', {'name': record.username},
+                                request=self.request)
+
+    def render_comment(self, record):
+        return render_to_string('eap_secrets/widgets/comment_column.html', {'comment': record.comment},
                                 request=self.request)
 
     def render_removebtn(self, record):
